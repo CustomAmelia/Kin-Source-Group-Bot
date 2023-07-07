@@ -10,7 +10,7 @@ module.exports = {
     .setDescription('Displays the group requests available.'),
   async execute(interaction) {
     try {
-      const requestsPerPage = 9; // Number of requests per page
+      const requestsPerPage = 3; // Number of requests per page
 
       // Define a schema for the guild info data
       const Schema = mongoose.Schema;
@@ -54,9 +54,9 @@ module.exports = {
             .setColor(0x0099FF)
             .setTitle(`Join Requests - Page ${currentPage}/${totalPages}`);
 
-          for (const joinRequests of joinRequested) {
+          for (const joinRequest of joinRequested) {
             embed.addFields(
-              { name: "Join Request", value: `ID: ${joinRequests.requester.userId}\nUsername: ${joinRequests.requester.username}\nDisplay Name: ${joinRequests.requester.displayName}\nRequested At: ${joinRequests.created}`, inline: true }
+              { name: "Join Request", value: `ID: ${joinRequest.requester.userId}\nUsername: ${joinRequest.requester.username}\nDisplay Name: ${joinRequest.requester.displayName}\nRequested At: ${joinRequest.created}`, inline: true }
             );
           }
 
@@ -87,7 +87,7 @@ module.exports = {
 
         const row = new ActionRowBuilder()
           .addComponents(previous, next);
-          if (joinRequests.length > 9) {
+          if (joinRequests.length > 3) {
             await reply.edit({ embeds: [embed], components: [row] });
           }
 
