@@ -10,7 +10,7 @@ module.exports = {
     .setDescription('Displays the group requests available.'),
   async execute(interaction) {
     try {
-      const requestsPerPage = 3; // Number of requests per page
+      const requestsPerPage = 5; // Number of requests per page
 
       // Define a schema for the guild info data
       const Schema = mongoose.Schema;
@@ -87,7 +87,7 @@ module.exports = {
 
         const row = new ActionRowBuilder()
           .addComponents(previous, next);
-          if (joinRequests.length > 3) {
+          if (joinRequests.length > 5) {
             await reply.edit({ embeds: [embed], components: [row] });
           }
 

@@ -70,18 +70,18 @@ module.exports = {
         const collector = reply.createMessageComponentCollector({ time: 60000 });
 
         collector.on('collect', async (button) => {
-          if (button.customId === 'den') {
-            const censorEmoji = '\ud83d\udc13';
-            noblox.handleJoinRequest(groupId, id, false)
-            embed.setTitle(`${censorEmoji} Denied Join Request`)
-            await reply.edit({ embeds: [embed], ephemeral: true });
-          } else if (button.customId === 'acc') {
-            const tickEmoji = '\u2705'; // Unicode representation for tick emoji
-            noblox.handleJoinRequest(groupId, id, true)
-            embed.setTitle(`${tickEmoji} Accepted Join Request`)
-            await reply.edit({ embeds: [embed], ephemeral: true });
+          if (button.customId === 'den' || button.customId === 'acc') {
+            // Disable the buttons
+            row.components.forEach(component => {
+              component.setDisabled(true);
+            });
+            await reply.edit({ components: [row] });
+            await button.reply({ content: '⚙️ Working...', ephemeral: true });
+            await noblox.handleJoinRequest(groupId, id, button.customId === 'acc');
+            await button.editReply({ content: '✅ Done', ephemeral: true });
           }
         });
+
         collector.on('end', () => {
             // Remove the buttons when the collector ends
             row.components.forEach(component => {

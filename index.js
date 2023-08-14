@@ -138,12 +138,12 @@ client.on('interactionCreate', async (interaction) => {
         await noblox.setCookie(cookie);
         await command.execute(interaction);
       } else {
-        await interaction.reply('Guild not found in the database.');
+        await interaction.reply({ content: 'Guild not found in the database.', ephemeral: true });
       }
     }
   } catch (error) {
     console.error(error);
-    interaction.reply({ content: 'There was an error while executing this command! Check if the cookie is valid or not?', ephemeral: true });
+    await interaction.reply({ content: 'There was an error while executing this command!', ephemeral: true });
   }
 });
 
